@@ -33,7 +33,8 @@ pipeline {
         echo "Merging Development into Master"
         sh 'git merge development'
         echo "Git Push to Origin"
-        sh 'git push origin master'   
+        withCredentials([sshUserPrivateKey(credentialsId: 'root', keyFileVariable: 'SSH_KEY')]) {
+          sh("git push origin master")
       }
     }
   }
